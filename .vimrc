@@ -46,8 +46,8 @@ let g:mapleader = ","
 nmap <leader>w :w!<cr>
 
 " Compile & Debug
-map <F8> :w<CR>:call CompileRun()<CR> 
-map <F8><F8> :w<CR>:call Debug()<CR>
+nmap <leader>r :w<CR>:call CompileRun()<CR> 
+nmap <leader>rr :w<CR>:call Debug()<CR>
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -55,7 +55,7 @@ map <F8><F8> :w<CR>:call Debug()<CR>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " My Current Project 
 " Quick open the folder of my current project 
-nmap <leader>c :tabnew ~/Projects/<cr>
+nmap <leader>c :tabnew ~/Dropbox/Study/633\ Pattern\ Recognition/Project1 <cr>
 
 " VIM Configuration
 nmap <leader>v :tabnew ~/.vimrc <cr>
@@ -465,8 +465,6 @@ func CompileRun()
 		exec "!python %" 
     elseif &filetype =='jade'
         exec "!make"
-    elseif &filetype == 'tex'
-        exec "\ll"
 	endif 
 endfunc
 
