@@ -46,9 +46,8 @@ let g:mapleader = ","
 nmap <leader>w :w!<cr>
 
 " Compile & Debug
-nmap <leader>r :w<CR>:call CompileRun()<CR> 
-nmap <leader>rr :w<CR>:call Debug()<CR>
-
+nmap <F8> :w<CR>:call CompileRun()<CR> 
+nmap <F8><F8> :w<CR>:call Debug()<CR>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Project Related
@@ -117,12 +116,7 @@ set novisualbell
 set t_vb=
 set tm=500
 
-" Grep generate the file name ( userful for latex)
-set grepprg=grep\ -nH\ $*
-let g:tex_flavor='latex'
-set iskeyword+=:
-autocmd BufEnter *.tex set sw=2
- 
+
 " Parenthesis Close
 :inoremap ( ()<ESC>i 
 :inoremap ) <c-r>=ClosePair(')')<CR> 
@@ -296,6 +290,16 @@ endfunc
 autocmd BufWrite *.py :call DeleteTrailingWS()
 autocmd BufWrite *.coffee :call DeleteTrailingWS()
 
+" Commenting blocks of code.
+autocmd FileType c,cpp,java,scala let b:comment_leader = '// '
+autocmd FileType sh,ruby,python   let b:comment_leader = '# '
+autocmd FileType conf,fstab       let b:comment_leader = '# '
+autocmd FileType tex              let b:comment_leader = '% '
+autocmd FileType mail             let b:comment_leader = '> '
+autocmd FileType vim              let b:comment_leader = '" '
+noremap <silent> <leader>cc :<C-B>silent <C-E>s/^/<C-R>=escape(b:comment_leader,'\/')<CR>/<CR>:nohlsearch<CR>
+noremap <silent> <leader>cu :<C-B>silent <C-E>s/^\V<C-R>=escape(b:comment_leader,'\/')<CR>//e<CR>:nohlsearch<CR>
+
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => vimgrep searching and cope displaying
@@ -365,25 +369,22 @@ set tags+=~/.vim/systags
 "Runtime Path Manipulation by pathogen.vim
 execute pathogen#infect() 
 
-" NerdTree 
+" NerdTree { 
 map <leader>t :NERDTree<cr>
+map <leader>tt :NERDTreeClose<cr>
+" }
 
 " Taglist Config { 
 " Put the window of Taglist on the right
 let Tlist_Use_Right_Window=1 
-
 " Fold the files which are not active
 let Tlist_File_Fold_Auto_Close=1
-
 " Only show current file taglist
 let Tlist_Show_One_File=1
-
 " Set ctags command
 let Tlist_Ctags_Cmd='/usr/local/bin/ctags'
-
 " Set focus on Tlist
 let Tlist_GainFocus_On_ToggleOpen = 1
-
 " Set the key for Taglist
 noremap <leader>tl :Tlist<CR> 
 " } 
@@ -393,11 +394,18 @@ let g:SuperTabDefaultCompletionType="<C-N>"
 " }
 
 " Latex-suite Config {
+" Grep generate the file name ( userful for latex)
+set grepprg=grep\ -nH\ $*
+let g:tex_flavor='latex'
+set iskeyword+=:
+autocmd BufEnter *.tex set sw=2
 let g:Tex_TreatMacViewerAsUNIX = 1
 let g:Tex_ExecuteUNIXViewerInForeground = 1
 let g:Tex_ViewRule_ps = 'open -a Preview'
 let g:Tex_ViewRule_pdf = 'open -a Preview'
 let g:Tex_ViewRule_dvi = 'open -a Preview'
+nmap <F3> :w<CR><leader>ll
+nmap <F3><F3> :w<CR><leader>lv
 " }
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Helper functions
