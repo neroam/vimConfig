@@ -392,6 +392,13 @@ noremap <leader>tl :Tlist<CR>
 let g:SuperTabDefaultCompletionType="<C-N>"
 " }
 
+" Latex-suite Config {
+let g:Tex_TreatMacViewerAsUNIX = 1
+let g:Tex_ExecuteUNIXViewerInForeground = 1
+let g:Tex_ViewRule_ps = 'open -a Preview'
+let g:Tex_ViewRule_pdf = 'open -a Preview'
+let g:Tex_ViewRule_dvi = 'open -a Preview'
+" }
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Helper functions
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
