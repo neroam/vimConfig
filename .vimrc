@@ -118,14 +118,14 @@ set tm=500
 
 
 " Parenthesis Close
-:inoremap ( ()<ESC>i 
-:inoremap ) <c-r>=ClosePair(')')<CR> 
-:inoremap { {}<ESC>i 
-:inoremap } <c-r>=ClosePair('}')<CR> 
-:inoremap [ []<ESC>i 
-:inoremap ] <c-r>=ClosePair(']')<CR> 
-:inoremap < <><ESC>i 
-:inoremap > <c-r>=ClosePair('>')<CR> 
+":inoremap ( ()<ESC>i 
+":inoremap ) <c-r>=ClosePair(')')<CR> 
+":inoremap { {}<ESC>i 
+":inoremap } <c-r>=ClosePair('}')<CR> 
+":inoremap [ []<ESC>i 
+":inoremap ] <c-r>=ClosePair(']')<CR> 
+":inoremap < <><ESC>i 
+":inoremap > <c-r>=ClosePair('>')<CR> 
 
 " Fold Method
 set foldmethod=syntax
@@ -172,8 +172,8 @@ set expandtab
 set smarttab
 
 " 1 tab == 4 spaces
-set shiftwidth=4
-set tabstop=4
+set shiftwidth=2 
+set tabstop=2 
 
 " Linebreak on 500 characters
 set lbr
@@ -231,7 +231,8 @@ noremap <BS> gT
 
 " Opens a new tab with the current buffer's path
 " Super useful when editing files in the same directory
-map <leader>te :tabedit <c-r>=expand("%:p:h")<cr>/
+map <leader>te :tabedit %:p:h<cr>
+" map <leader>te :Te<cr>
 
 " Switch CWD to the directory of the open buffer
 map <leader>cd :cd %:p:h<cr>:pwd<cr>
@@ -291,7 +292,8 @@ autocmd BufWrite *.py :call DeleteTrailingWS()
 autocmd BufWrite *.coffee :call DeleteTrailingWS()
 
 " Commenting blocks of code.
-autocmd FileType c,cpp,java,scala let b:comment_leader = '// '
+let b:comment_leader = '// '
+autocmd FileType c,cpp,java,scala,jade let b:comment_leader = '// '
 autocmd FileType sh,ruby,python   let b:comment_leader = '# '
 autocmd FileType conf,fstab       let b:comment_leader = '# '
 autocmd FileType tex              let b:comment_leader = '% '
@@ -299,6 +301,9 @@ autocmd FileType mail             let b:comment_leader = '> '
 autocmd FileType vim              let b:comment_leader = '" '
 noremap <silent> <leader>cc :<C-B>silent <C-E>s/^/<C-R>=escape(b:comment_leader,'\/')<CR>/<CR>:nohlsearch<CR>
 noremap <silent> <leader>cu :<C-B>silent <C-E>s/^\V<C-R>=escape(b:comment_leader,'\/')<CR>//e<CR>:nohlsearch<CR>
+
+" Looks for modeline from last 5 lines
+set modelines=5
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -404,6 +409,7 @@ let g:Tex_ExecuteUNIXViewerInForeground = 1
 let g:Tex_ViewRule_ps = 'open -a Preview'
 let g:Tex_ViewRule_pdf = 'open -a Preview'
 let g:Tex_ViewRule_dvi = 'open -a Preview'
+let g:Tex_MultipleCompileFormats='pdf,aux'
 nmap <F3> :w<CR><leader>ll
 nmap <F3><F3> :w<CR><leader>lv
 " }
