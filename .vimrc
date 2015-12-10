@@ -482,10 +482,10 @@ func CompileRun()
 	elseif &filetype =='cpp' 
 		exec "!g++ % -g -o %<" 
 		exec "!.\/%<" 
-	elseif &filetype == 'python' 
+	elseif &filetype == 'python' || &filetype == 'py'
 		exec "!python %" 
-    elseif &filetype =='jade'
-        exec "!make"
+  elseif &filetype =='jade'
+    exec "!make"
 	endif 
 endfunc
 
