@@ -3,7 +3,7 @@
 # Modify Terminal Prompt and Color
 ENDCOLOR="\[\e[0m\]"
 UNDERLINEBLUE="\[\e[0;34m\]"
-PS1="[\t @\u @$UNDERLINEBLUE\w$ENDCOLOR]\$ ";
+PS1="[\t |\u@\h |$UNDERLINEBLUE\w$ENDCOLOR]\$ ";
 
 # Modify the color of LS
 export CLICOLOR=1
@@ -36,5 +36,5 @@ export PYTHONPATH=~/Projects/caffe/python:$PYTHONPATH
 export PATH="/Users/neroam/Projects/caffe/build/install/bin:$PATH"
 
 # tmux
-alias dev="ssh neroam.com -t 'if tmux has-session -t main; then tmux -2CC attach -t main; else tmux -2CC new -d -s main; fi'"
+alias dev="ssh -X neroam.com -t 'if tmux has-session -t main; then tmux -2CC attach -t main; else tmux -2CC new -d -s main; fi'"
 #alias dev="if tmux has-session -t main; then tmux -2CC attach -t main; else tmux -2CC new -s main; fi"
