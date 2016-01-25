@@ -62,6 +62,9 @@ nmap <leader>v :tabnew ~/.vimrc <cr>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => VIM user interface
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Set vertical line for long text
+set colorcolumn=80
+
 " Set number on
 set number
 
@@ -224,6 +227,7 @@ map <leader>tn :tabnew<cr>
 map <leader>to :tabonly<cr>
 map <leader>tc :tabclose<cr>
 map <leader>tm :tabmove 
+map <leader>tv :tab sview 
 
 " Move between tabs
 noremap <tab> gt
