@@ -216,6 +216,10 @@ map <C-k> <C-W>k
 map <C-h> <C-W>h
 map <C-l> <C-W>l
 
+" Mappings for windows
+map <leader>we :vsp %:p:h<cr>
+map <leader>wv :vsp<cr>
+
 " Close the current buffer
 map <leader>bd :Bclose<cr>
 
