@@ -1,7 +1,6 @@
 "*":
   "clang-format":
     executable: "/usr/bin/clang-format-3.6"
-    style: "~/arc_ws/src/g1_doc/clang-format/clang-format"
   core:
     disabledPackages: [
       "minimap"
