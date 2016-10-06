@@ -1,0 +1,23 @@
+"*":
+  "clang-format":
+    executable: "/usr/bin/clang-format-3.6"
+    style: "~/arc_ws/src/g1_doc/clang-format/clang-format"
+  core:
+    disabledPackages: [
+      "minimap"
+      "linter-clang"
+    ]
+    themes: [
+      "atom-dark-ui"
+      "atom-dark-syntax"
+    ]
+  editor:
+    fontSize: 15
+    invisibles: {}
+  "exception-reporting":
+    userId: "80eb1151-56ac-039e-88f7-b8e4a5abff6e"
+  linter: {}
+  minimap:
+    displayMinimapOnLeft: true
+  welcome:
+    showOnStartup: false
