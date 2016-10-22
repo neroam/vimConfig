@@ -5,6 +5,8 @@
     disabledPackages: [
       "minimap"
       "linter-clang"
+      "goto"
+      "goto-definition"
     ]
     themes: [
       "atom-dark-ui"
