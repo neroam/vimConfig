@@ -23,20 +23,17 @@
 " 	 
 "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
+" FB related
+source $LOCAL_ADMIN_SCRIPTS/master.vimrc
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => General
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Sets how many lines of history VIM has to remember
 set history=1000
 
-" Enable filetype plugins
-filetype plugin on
-filetype indent on
-
 " Set to auto read when a file is changed from the outside
 set autoread
-
+ 
 " With a map leader it's possible to do extra key combinations
 " like <leader>w saves the current file
 let mapleader = ","
@@ -44,7 +41,7 @@ let g:mapleader = ","
 
 " Fast saving
 nmap <leader>w :w!<cr>
-
+ 
 " Compile & Debug
 nmap <F8> :w<CR>:call CompileRun()<CR> 
 nmap <F8><F8> :w<CR>:call Debug()<CR>
@@ -58,7 +55,7 @@ nmap <leader>c :tabnew ~/Dropbox/Study/633\ Pattern\ Recognition/Project1 <cr>
 
 " VIM Configuration
 nmap <leader>v :tabnew ~/.vimrc <cr>
-
+ 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => VIM user interface
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -108,10 +105,13 @@ set lazyredraw
 " For regular expressions turn magic on
 set magic
 
-" Show matching brackets when text indicator is over them
-set showmatch 
-" How many tenths of a second to blink when matching brackets
-set mat=2
+" Disable the matching pair
+let loaded_matchparen = 1
+
+" " Show matching brackets when text indicator is over them
+" set showmatch 
+" " How many tenths of a second to blink when matching brackets
+" set mat=2
 
 " No annoying sound on errors
 set noerrorbells
@@ -301,7 +301,7 @@ autocmd BufWrite *.coffee :call DeleteTrailingWS()
 
 " Commenting blocks of code.
 let b:comment_leader = '// '
-autocmd FileType c,cpp,java,scala,jade let b:comment_leader = '// '
+autocmd FileType c,cpp,java,scala,jade,php let b:comment_leader = '// '
 autocmd FileType sh,ruby,python   let b:comment_leader = '# '
 autocmd FileType conf,fstab       let b:comment_leader = '# '
 autocmd FileType tex              let b:comment_leader = '% '
@@ -309,7 +309,7 @@ autocmd FileType mail             let b:comment_leader = '> '
 autocmd FileType vim              let b:comment_leader = '" '
 noremap <silent> <leader>cc :<C-B>silent <C-E>s/^/<C-R>=escape(b:comment_leader,'\/')<CR>/<CR>:nohlsearch<CR>
 noremap <silent> <leader>cu :<C-B>silent <C-E>s/^\V<C-R>=escape(b:comment_leader,'\/')<CR>//e<CR>:nohlsearch<CR>
-
+  
 " Looks for modeline from last 5 lines
 set modelines=5
 
@@ -369,18 +369,50 @@ noremap <Leader>m mmHmt:%s/<C-V><cr>//ge<cr>'tzt'm
 map <leader>q :e ~/buffer<cr>
 
 " Toggle paste mode on and off
-map <leader>pp :setlocal paste!<cr>
+map <leader>lp :setlocal paste!<cr>
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Plugins Config
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" "Runtime Path Manipulation by pathogen.vim
+" execute pathogen#infect() 
+
+" Required Vundle setup
+set nocompatible              " be iMproved, required
+filetype off                  " required
+
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+Plugin 'ctrlpvim/ctrlp.vim'
+
+Plugin 'altercation/vim-colors-solarized'
+
+Plugin 'scrooloose/nerdtree'
+
+Plugin 'vim-scripts/taglist.vim'
+
+Plugin 'vim-syntastic/syntastic'
+
+Plugin 'ervandew/supertab'
+
+Plugin 'vim-latex/vim-latex'
+
+Plugin 'w0rp/ale'
+call vundle#end()
 
 " Import the systags
 set tags+=~/.vim/systags
 
-"Runtime Path Manipulation by pathogen.vim
-execute pathogen#infect() 
+" Enable filetype plugins
+filetype plugin on
+filetype indent on
+
+" Colorscheme
+let g:solarized_termtrans = 1
+let g:solarized_termcolors=256
+colorscheme solarized 
 
 " NerdTree { 
 map <leader>t :NERDTree<cr>
@@ -395,7 +427,7 @@ let Tlist_File_Fold_Auto_Close=1
 " Only show current file taglist
 let Tlist_Show_One_File=1
 " Set ctags command
-let Tlist_Ctags_Cmd='/usr/local/bin/ctags'
+let Tlist_Ctags_Cmd='/bin/ctags'
 " Set focus on Tlist
 let Tlist_GainFocus_On_ToggleOpen = 1
 " Set the key for Taglist
@@ -421,6 +453,34 @@ let g:Tex_MultipleCompileFormats='pdf,aux'
 nmap <F3> :w<CR><leader>ll
 nmap <F3><F3> :w<CR><leader>lv
 " }
+
+" Syntastic
+let g:syntastic_python_checkers=['pyflakes']"
+let g:syntastic_python_python_exec = '/usr/local/fbcode/gcc-4.8.1-glibc-2.17-fb/bin/python2.7'
+if &ft != 'php'
+  let g:syntastic_always_populate_loc_list = 1
+  let g:syntastic_auto_loc_list=1
+  let g:syntastic_quiet_messages = { "type": "style" }
+endif
+let g:syntastic_mode_map = { 'passive_filetypes': ["java", "cpp", "php"] }
+  
+" YouCompleteMe
+let g:ycm_global_ycm_extra_conf='~/.vim/bundle/YouCompleteMe/ycm_extra_conf.py'
+let g:ycm_autoclose_preview_window_after_completion = 1
+let g:ycm_min_num_identifier_candidate_chars = 4
+let g:ycm_enable_diagnostic_signs = 0
+let g:ycm_error_symbol = 'x'
+let g:ycm_warning_symbol = '!'
+let g:ycm_server_keep_logfiles = 1
+let g:ycm_server_log_level = 'debug'
+nnoremap <leader>pg :YcmCompleter GoToDefinitionElseDeclaration<CR>
+nnoremap <leader>pd :YcmCompleter GoToDefinition<CR>
+nnoremap <leader>pc :YcmCompleter GoToDeclaration<CR>
+
+" Support hack
+let g:hack#omnifunc=1
+autocmd BufNewFile,BufRead *.php setl omnifunc=hackcomplete#Complete
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Helper functions
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -524,5 +584,3 @@ function ClosePair(char)
 		return a:char 
 	endif 
 endf
-
-
